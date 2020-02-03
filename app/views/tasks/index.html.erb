@@ -1,0 +1,7 @@
+<h1>タスクの一覧</h1>
+<% @tasks.each do |task| %>
+  <div>
+    <h2><%= link_to task.name, task_path(task) %></h2>
+    <p><%= link_to task.description, task_path(task) %></p>
+  </div>
+<% end %>
