@@ -1,0 +1,45 @@
+<%= form_with(model: @task, local: true) do |f| %>
+  <div>
+    <%= f.label :name, "タスク名" %>
+    <%= f.text_field :name %>
+    <% @task.errors.full_messages_for(:name).each do |message| %>
+      <p class="has_error"><%= message %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :description, "タスクの内容" %>
+    <%= f.text_field :description %>
+    <% @task.errors.full_messages_for(:description).each do |message| %>
+      <p class="has_error"><%= message %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :status, "ステータス" %>
+    <%= f.select :status, Task.statuses.keys.to_a, include_blank: true %>
+    <% @task.errors.full_messages_for(:status).each do |message| %>
+      <p class="has_error"><%= message %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :deadline, "期限" %>
+    <%= f.datetime_field :deadline %>
+    <% @task.errors.full_messages_for(:deadline).each do |message| %>
+      <p class="has_error"><%= message %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :priority, "優先度" %>
+    <%= f.select :priority, Task.priorities.keys.to_a, include_blank: true %>
+    <% @task.errors.full_messages_for(:priority).each do |message| %>
+      <p class="has_error"><%= message %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.submit submit %>
+  </div>
+<% end %>
