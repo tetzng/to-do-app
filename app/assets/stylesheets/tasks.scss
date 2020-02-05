@@ -1,0 +1,21 @@
+.alert {
+  width: 100%;
+}
+
+.alert-success {
+  background-color: skyblue;
+  color: blue;
+}
+
+.alert-error {
+  background-color: lightcoral;
+  color: crimson;
+}
+
+.has_error {
+  color: red;
+}
+
+.field_with_errors {
+  color: red;
+}
