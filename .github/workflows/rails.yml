@@ -44,6 +44,7 @@ jobs:
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rails db:drop db:create db:environment:set RAILS_ENV=test db:migrate
+        bundle exec rails yarn:install assets:precompile
 
     - name: rspec
       env:
