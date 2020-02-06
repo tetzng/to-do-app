@@ -14,6 +14,10 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  driven_by :selenium, using: :headless_chrome do |driver_options|
+    driver_options.add_argument('--disable-dev-sim-usage')
+    driver_options.add_argument('--no-sandbox')
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
