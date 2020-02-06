@@ -23,6 +23,12 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.7.x
+    - name: Install chrome
+      run: |
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+        echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list
+        apt update -y
+        apt install -y google-chrome-stable
     - name: Build
       env:
         PGHOST: localhost
