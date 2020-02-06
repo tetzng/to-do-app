@@ -1,18 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  before do
-    @task = Task.create(
-      name: "task_name",
-      status: "doing",
-      priority: "high",
-    )
-  end
+  let!(:task) { create(:task) }
 
   scenario "displaying tasks list" do
     visit tasks_path
 
-    expect(page).to have_content @task.name
+    expect(page).to have_content task.name
   end
 
   scenario "creating a new task" do
@@ -29,11 +23,11 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   scenario "updating a task" do
-    visit edit_task_path(@task)
+    visit edit_task_path(task)
 
-    expect(page).to have_field "タスク名", with: @task.name
-    expect(page).to have_select("ステータス", selected: @task.status)
-    expect(page).to have_select("優先度", selected: @task.priority)
+    expect(page).to have_field "タスク名", with: task.name
+    expect(page).to have_select("ステータス", selected: task.status)
+    expect(page).to have_select("優先度", selected: task.priority)
 
     fill_in "タスク名", with: "あたらしいたすくのなまえ"
     click_button '更新'

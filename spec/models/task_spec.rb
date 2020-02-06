@@ -12,21 +12,21 @@ RSpec.describe Task, type: :model do
   end
 
   it "is invalid without name" do
-    task = Task.new(name: nil)
+    task = build(:task, name: nil)
     task.valid?
 
     expect(task.errors[:name]).to include("can't be blank")
   end
 
   it "is invalid without status" do
-    task = Task.new(status: nil)
+    task = build(:task, status: nil)
     task.valid?
 
     expect(task.errors[:status]).to include("can't be blank")
   end
 
   it "is invalid without priority" do
-    task = Task.new(priority: nil)
+    task = build(:task, priority: nil)
     task.valid?
 
     expect(task.errors[:priority]).to include("can't be blank")
