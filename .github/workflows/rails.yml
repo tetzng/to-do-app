@@ -34,4 +34,8 @@ jobs:
         bundle exec rails db:drop db:create db:environment:set RAILS_ENV=test db:migrate
 
     - name: rspec
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        RAILS_ENV: test
       run: bundle exec rspec
