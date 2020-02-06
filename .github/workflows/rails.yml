@@ -29,6 +29,12 @@ jobs:
         echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
         sudo apt update -y
         sudo apt install -y google-chrome-stable
+    - name: Setup YARN and NodeJS
+      run: |
+        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+        echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+        curl -sL https://deb.nodesource.com/setup_13.x | bash -
+        apt-get install -y yarn nodejs
     - name: Build
       env:
         PGHOST: localhost
