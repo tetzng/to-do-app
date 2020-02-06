@@ -36,8 +36,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task.destroy
-    redirect_to tasks_path, flash: { success: "タスクを削除しました" }
+    if @task.destroy
+      redirect_to tasks_path, flash: { success: "タスクを削除しました" }
+    else
+      redirect_to tasks_path, flash: { error: "タスクの削除に失敗しました" }
+    end
   end
 
   private
