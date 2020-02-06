@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = Task.all
@@ -32,6 +32,14 @@ class TasksController < ApplicationController
     else
       flash.now[:error] = "タスクの更新に失敗しました"
       render "edit"
+    end
+  end
+
+  def destroy
+    if @task.destroy
+      redirect_to tasks_path, flash: { success: "タスクを削除しました" }
+    else
+      redirect_to tasks_path, flash: { error: "タスクの削除に失敗しました" }
     end
   end
 
