@@ -6,6 +6,7 @@
   <div>
     <h2><%= link_to task.name, task_path(task) %></h2>
     <p><%= link_to task.description, task_path(task) %></p>
+    <p>作成日時: <%= l(task.created_at) %></p>
     <p><%= link_to "#{t '.edit'}", edit_task_path(task) %></p>
     <p><%= link_to "#{t '.delete'}", task_path(task), method: :delete, data: { confirm: "本当に削除しますか？" } %></p>
   </div>
