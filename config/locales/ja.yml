@@ -9,6 +9,9 @@ ja:
         status: ステータス
         deadline: 期限
         priority: 優先度
+  attributes:
+    created_at: 作成日時
+    updated_at: 更新日時
   enums:
     task:
       status:
@@ -19,4 +22,25 @@ ja:
         high: 高
         middle: 中
         low: 低
+  tasks:
+    index:
+      title: タスクの一覧
+      create: 新規作成
+      edit: 編集
+      delete: 削除
+    show:
+      title: タスクの詳細
+    new:
+      title: タスクの作成
+    edit:
+      title: タスクの編集
+  task:
+    statuses:
+      waiting: 未着手
+      doing: 着手
+      done: 完了
+    priorities:
+      high: 高
+      middle: 中
+      low: 低
 
