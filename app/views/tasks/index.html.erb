@@ -2,11 +2,25 @@
 
 <h1><%= t '.title' %></h1>
 <%= link_to "#{t '.create'}" , new_task_path %>
+
+<div>
+  作成日時
+  <%= link_to "▼", tasks_path(sort: "created_at", direction: "desc") %>
+  <%= link_to "▲", tasks_path(sort: "created_at", direction: "asc") %>
+</div>
+
+<div>
+  期限
+  <%= link_to "▼", tasks_path(sort: "deadline", direction: "desc") %>
+  <%= link_to "▲", tasks_path(sort: "deadline", direction: "asc") %>
+</div>
+
 <% @tasks.each do |task| %>
   <div>
     <h2><%= link_to task.name, task_path(task) %></h2>
     <p><%= link_to task.description, task_path(task) %></p>
     <p>作成日時: <%= l(task.created_at) %></p>
+    <p>期限: <%= l(task.deadline) %></p>
     <p><%= link_to "#{t '.edit'}", edit_task_path(task) %></p>
     <p><%= link_to "#{t '.delete'}", task_path(task), method: :delete, data: { confirm: "本当に削除しますか？" } %></p>
   </div>

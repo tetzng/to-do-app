@@ -2,7 +2,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.order("created_at desc")
+    sort_column = set_sort_column
+    sort_direction = set_sort_direction
+    @tasks = Task.order("#{sort_column} #{sort_direction}")
   end
 
   def new
@@ -44,6 +46,14 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def set_sort_column
+    ["created_at", "deadline"].include?(params[:sort]) ? params[:sort] : "created_at"
+  end
+
+  def set_sort_direction
+    ["asc", "desc"].include?(params[:direction]) ? params[:direction] : "desc"
+  end
 
   def set_task
     @task = Task.find(params[:id])
