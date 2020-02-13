@@ -3,6 +3,6 @@
 <div>
   <p><%= @task.description %></p>
   <p>ステータス: <%= t(@task.status, scope: 'task.statuses') %></p>
-  <p>期限: <%= @task.deadline %></p>
+  <p>期限: <%= l(@task.deadline) %></p>
   <p>優先度: <%= t(@task.priority , scope: 'task.priorities')%></p>
 </div>

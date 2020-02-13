@@ -43,4 +43,7 @@ ja:
       high: 高
       middle: 中
       low: 低
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
 
