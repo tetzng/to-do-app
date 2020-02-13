@@ -15,20 +15,20 @@ RSpec.describe Task, type: :model do
     task = build(:task, name: nil)
     task.valid?
 
-    expect(task.errors[:name]).to include("can't be blank")
+    expect(task.errors[:name]).to include("を入力してください")
   end
 
   it "is invalid without status" do
     task = build(:task, status: nil)
     task.valid?
 
-    expect(task.errors[:status]).to include("can't be blank")
+    expect(task.errors[:status]).to include("を入力してください")
   end
 
   it "is invalid without priority" do
     task = build(:task, priority: nil)
     task.valid?
 
-    expect(task.errors[:priority]).to include("can't be blank")
+    expect(task.errors[:priority]).to include("を入力してください")
   end
 end
