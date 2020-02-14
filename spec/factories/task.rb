@@ -3,7 +3,7 @@ FactoryBot.define do
     name { "task_name" }
     description { "task_description" }
     status { "doing" }
-    deadline { "" }
+    deadline { Time.current }
     priority { "high" }
   end
 end

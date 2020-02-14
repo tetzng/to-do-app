@@ -2,22 +2,102 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let!(:task) { create(:task) }
+  let!(:task2) { create(:task, name: "task2", deadline: Time.current - 1.day, created_at: Time.current + 1.day) }
+  let!(:task3) { create(:task, name: "task3", deadline: Time.current + 2.days, created_at: Time.current + 2.days) }
+  let!(:task4) { create(:task, name: "task4", deadline: Time.current - 3.days, created_at: Time.current + 3.days) }
 
-  scenario "displaying tasks in DESC order of 'created_at'" do
-    task2 = create(:task, name: "task2", created_at: Time.current + 1.day)
-    task3 = create(:task, name: "task3", created_at: Time.current + 2.days)
-    task4 = create(:task, name: "task4", created_at: Time.current + 3.days)
+  context "displaying tasks" do
+    context "in DESC order of 'created_at'" do
+      scenario "without selecting sort" do
+        visit tasks_path
 
-    visit tasks_path
-    first_task = all('h2')[0]
-    second_task = all('h2')[1]
-    third_task = all('h2')[2]
-    fourth_task = all('h2')[3]
+        first_task = all('h2')[0]
+        second_task = all('h2')[1]
+        third_task = all('h2')[2]
+        fourth_task = all('h2')[3]
 
-    expect(first_task).to have_content task4.name
-    expect(second_task).to have_content task3.name
-    expect(third_task).to have_content task2.name
-    expect(fourth_task).to have_content task.name
+        expect(first_task).to have_content task4.name
+        expect(second_task).to have_content task3.name
+        expect(third_task).to have_content task2.name
+        expect(fourth_task).to have_content task.name
+      end
+
+      scenario "with selecting sort" do
+        visit tasks_path
+
+        within '.created_at_sort' do
+          click_link '▼'
+        end
+        sleep 0.2
+
+        first_task = all('h2')[0]
+        second_task = all('h2')[1]
+        third_task = all('h2')[2]
+        fourth_task = all('h2')[3]
+
+        expect(first_task).to have_content task4.name
+        expect(second_task).to have_content task3.name
+        expect(third_task).to have_content task2.name
+        expect(fourth_task).to have_content task.name
+      end
+    end
+
+    scenario "in ASC order of 'created_at'" do
+      visit tasks_path
+
+      within '.created_at_sort' do
+        click_link '▲'
+      end
+      sleep 0.2
+
+      first_task = all('h2')[0]
+      second_task = all('h2')[1]
+      third_task = all('h2')[2]
+      fourth_task = all('h2')[3]
+
+      expect(first_task).to have_content task.name
+      expect(second_task).to have_content task2.name
+      expect(third_task).to have_content task3.name
+      expect(fourth_task).to have_content task4.name
+    end
+
+    scenario "in DESC order of 'deadline'" do
+      visit tasks_path
+
+      within '.deadline_sort' do
+        click_link '▼'
+      end
+      sleep 0.2
+
+      first_task = all('h2')[0]
+      second_task = all('h2')[1]
+      third_task = all('h2')[2]
+      fourth_task = all('h2')[3]
+
+      expect(first_task).to have_content task3.name
+      expect(second_task).to have_content task.name
+      expect(third_task).to have_content task2.name
+      expect(fourth_task).to have_content task4.name
+    end
+
+    scenario "in ASC order of 'deadline'" do
+      visit tasks_path
+
+      within '.deadline_sort' do
+        click_link '▲'
+      end
+      sleep 0.2
+
+      first_task = all('h2')[0]
+      second_task = all('h2')[1]
+      third_task = all('h2')[2]
+      fourth_task = all('h2')[3]
+
+      expect(first_task).to have_content task4.name
+      expect(second_task).to have_content task2.name
+      expect(third_task).to have_content task.name
+      expect(fourth_task).to have_content task3.name
+    end
   end
 
   context "creating a new task" do
@@ -70,17 +150,19 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  scenario "deleting a task" do
-    visit tasks_path
+  context "deleting a task" do
+    scenario "can delete" do
+      visit tasks_path
 
-    delete_button = find_link "削除"
-    expect(delete_button['data-confirm']).to eq "本当に削除しますか？"
+      delete_button = find_link "削除", match: :first
+      expect(delete_button['data-confirm']).to eq "本当に削除しますか？"
 
-    accept_confirm do
-      click_link "削除"
+      accept_confirm do
+        click_link "削除", match: :first
+      end
+
+      expect(page).to have_content "タスクを削除しました"
+      expect(page).to_not have_content "task4"
     end
-
-    expect(page).to have_content "タスクを削除しました"
-    expect(page).to_not have_content "task_name"
   end
 end
