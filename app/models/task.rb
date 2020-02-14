@@ -14,4 +14,9 @@ class Task < ApplicationRecord
     middle: 1,
     low: 2,
   }
+  def self.search(word, status)
+    tasks =
+      statuses.include?(status) ? where(status: status) : all
+    word.present? ? tasks.where('name like ?', "%#{word}%") : tasks
+  end
 end

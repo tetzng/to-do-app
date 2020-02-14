@@ -6,8 +6,8 @@ class TasksController < ApplicationController
       ["created_at", "deadline"].include?(params[:sort]) ? params[:sort] : "created_at"
     sort_direction =
       ["asc", "desc"].include?(params[:direction]) ? params[:direction] : "desc"
-
-    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    tasks = Task.search(params[:word], params[:status])
+    @tasks = tasks.order("#{sort_column} #{sort_direction}")
   end
 
   def new

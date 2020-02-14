@@ -3,6 +3,15 @@
 <h1><%= t '.title' %></h1>
 <%= link_to "#{t '.create'}" , new_task_path %>
 
+<div>
+  検索
+  <%= form_with url: tasks_path, method: :get, local: true  do |f| %>
+    <%= f.text_field :word %>
+    <%= f.select :status, t("task.statuses").invert, include_blank: true %>
+    <%= f.submit "検索" %>
+  <% end %>
+</div>
+
 <div class="created_at_sort">
   作成日時
   <%= link_to "▼", tasks_path(sort: "created_at", direction: "desc") %>
