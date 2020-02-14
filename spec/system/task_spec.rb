@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let!(:task) { create(:task) }
-  let!(:task2) { create(:task, name: "task2", deadline: Time.current - 1.day, created_at: Time.current + 1.day) }
+  let!(:task2) { create(:task, name: "task2", status: "done", deadline: Time.current - 1.day, created_at: Time.current + 1.day) }
   let!(:task3) { create(:task, name: "task3", deadline: Time.current + 2.days, created_at: Time.current + 2.days) }
   let!(:task4) { create(:task, name: "task4", deadline: Time.current - 3.days, created_at: Time.current + 3.days) }
 
@@ -97,6 +97,39 @@ RSpec.describe 'Tasks', type: :system do
       expect(second_task).to have_content task2.name
       expect(third_task).to have_content task.name
       expect(fourth_task).to have_content task3.name
+    end
+  end
+
+  context "searching tasks" do
+    scenario "by name" do
+      visit tasks_path
+
+      fill_in "word", with: "task3"
+      click_button '検索'
+
+      first_task = all('h2')[0]
+      expect(first_task).to have_content task3.name
+    end
+
+    scenario "by status" do
+      visit tasks_path
+
+      select "完了", from: "status"
+      click_button '検索'
+
+      first_task = all('h2')[0]
+      expect(first_task).to have_content task2.name
+    end
+
+    scenario "by name and status" do
+      visit tasks_path
+
+      fill_in "word", with: "name"
+      select "着手", from: "status"
+      click_button '検索'
+
+      first_task = all('h2')[0]
+      expect(first_task).to have_content task.name
     end
   end
 

@@ -14,4 +14,7 @@ class Task < ApplicationRecord
     middle: 1,
     low: 2,
   }
+
+  scope :sort_status, -> status { where(status: status) if statuses.include?(status) }
+  scope :sort_word, -> word { where('name like ?', "%#{word}%") if word.present? }
 end
