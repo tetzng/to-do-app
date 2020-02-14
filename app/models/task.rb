@@ -14,9 +14,7 @@ class Task < ApplicationRecord
     middle: 1,
     low: 2,
   }
-  def self.search(word, status)
-    tasks =
-      statuses.include?(status) ? where(status: status) : all
-    word.present? ? tasks.where('name like ?', "%#{word}%") : tasks
-  end
+
+  scope :sort_status, -> status { where(status: status) if statuses.include?(status) }
+  scope :sort_word, -> word { where('name like ?', "%#{word}%") if word.present? }
 end
