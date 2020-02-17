@@ -7,7 +7,8 @@ class TasksController < ApplicationController
     sort_direction =
       ["asc", "desc"].include?(params[:direction]) ? params[:direction] : "desc"
     tasks = Task.sort_status(params[:status]).sort_word(params[:word])
-    @tasks = tasks.order("#{sort_column} #{sort_direction}")
+
+    @tasks = tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(5)
   end
 
   def new

@@ -33,7 +33,6 @@
     <p><%= link_to "#{t '.edit'}", edit_task_path(task) %></p>
     <p><%= link_to "#{t '.delete'}", task_path(task), method: :delete,
       data: { confirm: "本当に削除しますか？" }, class: "task_delete_button" %></p>
-
   </div>
 <% end %>
-
+<%= paginate @tasks, window: 2 %>
