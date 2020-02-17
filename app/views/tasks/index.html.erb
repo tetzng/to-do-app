@@ -35,4 +35,4 @@
       data: { confirm: "本当に削除しますか？" }, class: "task_delete_button" %></p>
   </div>
 <% end %>
-<%= paginate @tasks %>
+<%= paginate @tasks, window: 2 %>
